@@ -19,6 +19,7 @@
                         <th>Id</th>
                         <th>Título</th>
                         <th>Descripción</th>
+                        <th>Etiqueta</tH>
                         <th>Ruta</th>
                         <th>Fecha de creación</th>
                         <th>Actualizar</th> 
@@ -31,6 +32,11 @@
                             <td><%= foto.id %></td>
                             <td><%= foto.titulo %></td>
                             <td><%= foto.descripcion %></td>
+                            <td>
+                                <% if (foto.etiqueta && foto.etiqueta.length > 0) { %>
+                                    <%= foto.etiqueta.map(e => e.texto).join(', ') %>
+                                <% } %>
+                            </td>                            
                             <td><%= foto.ruta %></td>
                             <td><%= foto.createdAt.toLocaleDateString('en-US') %></td>
                             <td><button type="button" class="btn btn-primary btn-sm" onclick="location.href='/edit/<%= foto.id %>'">Editar</button></td>
