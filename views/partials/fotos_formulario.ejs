@@ -1,0 +1,38 @@
+<div class="form-container">
+    <!-- Foto tabla -->
+    <% if (arrFotos.length > 0) { %>
+        <% arrFotos.forEach(foto => { %>
+        <div id="fotoDisplay">
+            <div class="form-group">
+                <label for="descriptionDisplay">Título</label>
+                <input type="text" class="form-control" id="descriptionDisplay" value="<%= foto.titulo %>" readonly>
+              </div>
+            <div class="form-group">
+              <label for="titleDisplay">Descripción</label>
+              <input type="text" class="form-control" id="titleDisplay" value="<%= foto.descripcion %>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="titleDisplay">Calificación</label>
+                <input type="text" class="form-control" id="titleDisplay" value="<%= foto.calificacion %>" readonly>
+              </div>
+            <div class="form-group">
+              <label for="pathDisplay">Ruta</label>
+              <input type="text" class="form-control" id="pathDisplay" value="<%= foto.ruta %>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="pathDisplay">Etiquetas</label>
+                <div>
+                    <% if (foto.etiqueta && foto.etiqueta.length > 0) { %>
+                        <% foto.etiqueta.forEach(etiqueta => { %>
+                            <span class="badge badge-pill badge-info" style="background-color: #17a2b8; color: white;"><%= etiqueta.texto %></span>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+            <button type="button" class="btn close-btn" onclick="window.location.href='/'">Close</button>
+        </div> 
+        <% }) %>
+      <% } else { %>
+        <p>No photos found.</p>
+      <% } %>              
+</div>

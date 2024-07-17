@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const Sequelize = require('sequelize');
+//const Sequelize = require('sequelize');
+const { Sequelize, Op} = require('sequelize'); // Op es necesario para las operaciones de comparación
 const Foto = require('../models').foto;
 const Etiqueta = require('../models').etiqueta; 
 
@@ -29,7 +30,93 @@ router.get('/findAll/view', function(req, res, next) {
     }]  
   }) 
   .then(fotos => {
-    res.render('fotos', { title: 'Fotos', arrFotos: fotos });
+    res.render('fotitos', { title: 'Fotos', arrFotos: fotos });
+  })
+  .catch(error => res.status(400).send(error));
+});
+
+router.get('/findAllByRate/json', function(req, res, next) {
+  let lower = parseFloat(req.query.lower);
+  let higher = parseFloat(req.query.higher);
+  Foto.findAll({
+    attributes: { exclude: ["updatedAt"] },
+    include: [{
+      model: Etiqueta,
+      attributes: ["texto"],
+      through: { attributes: [] }
+    }],
+    where: {
+      calificacion: {
+        [Op.between]: [lower, higher] 
+      }
+    } 
+  })
+  .then(fotos => {
+    res.json(fotos);
+  })
+  .catch(error => res.status(400).send(error));
+});
+
+router.get('/findAllByRate/view', function(req, res, next) {
+  let lower = parseFloat(req.query.lower);
+  let higher = parseFloat(req.query.higher);
+  Foto.findAll({
+    attributes: { exclude: ["updatedAt"] },
+    include: [{
+      model: Etiqueta,
+      attributes: ["texto"],
+      through: { attributes: [] }
+    }],
+    where: {
+      calificacion: {
+        [Op.between]: [lower, higher] 
+      }
+    } 
+  })
+  .then(fotos => {
+    res.render('fotitos', { title: 'Fotos', arrFotos: fotos });
+  })
+  .catch(error => res.status(400).send(error));
+});
+
+router.get('/findAllById/:id/json', function(req, res, next) {
+  let id = parseInt(req.params.id);
+  Foto.findAll({
+    attributes: { exclude: ["updatedAt"] },
+    include: [{
+      model: Etiqueta,
+      attributes: ["texto"],
+      through: { attributes: [] }
+    }],
+    where: {
+      [Op.and]: [
+        { id: id }
+      ]
+    }
+  })
+  .then(fotos => {
+    res.json(fotos);
+  })
+  .catch(error => res.status(400).send(error));
+});
+
+router.get('/findAllById/:id/view', function(req, res, next) {
+  let id = parseInt(req.params.id);
+  Foto.findAll({
+    attributes: { exclude: ["updatedAt"] },
+    include: [{
+      model: Etiqueta,
+      attributes: ["texto"],
+      through: { attributes: [] }
+    }],
+    where: {
+      [Op.and]: [
+        { id: id }
+      ]
+    }
+  })
+  .then(fotos => {
+    res.render('fototes', { title: 'Fotos', arrFotos: fotos });
   })
   .catch(error => res.status(400).send(error));
 });

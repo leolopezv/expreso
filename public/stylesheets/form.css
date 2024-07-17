@@ -1,0 +1,31 @@
+.container-fluid {
+    display: flex;
+}
+.nav {
+    flex: 1;
+}
+.form-container {
+    flex: 3;
+    padding: 20px;
+}
+.form-group {
+    margin-bottom: 10px;
+}
+.form-control[readonly] {
+background-color: transparent;
+border: none;
+border-bottom: 1px solid #ced4da; 
+border-radius: 0; 
+padding-left: 0;
+}
+.close-btn {
+background-color: #6c757d; 
+color: white;
+padding: 5px 10px;
+border: none;
+border-radius: 5px; 
+cursor: pointer;
+}
+.close-btn:hover {
+background-color: #5a6268;
+}
